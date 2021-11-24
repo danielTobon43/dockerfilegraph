@@ -5,7 +5,7 @@ import (
 )
 
 // BuildDotFile builds a GraphViz .dot file from a Google Cloud Build configuration
-func BuildDotFile(simplifiedDockerfile SimplifiedDockerfile) string {
+func BuildDotFile(simplifiedDockerfile SimplifiedDockerfile, labels bool) string {
 	graph := gographviz.NewEscape()
 	graph.SetName("G")
 	graph.SetDir(true)
@@ -43,10 +43,20 @@ func BuildDotFile(simplifiedDockerfile SimplifiedDockerfile) string {
 			}
 
 			edgeAttrs := map[string]string{}
-			if waitFor.Type == waitForType(copy) {
+			if waitFor.Type == waitForType(from) {
+				if labels {
+					edgeAttrs["label"] = "FROM"
+				}
+			} else if waitFor.Type == waitForType(copy) {
 				edgeAttrs["arrowhead"] = "empty"
+				if labels {
+					edgeAttrs["label"] = "COPY"
+				}
 			} else if waitFor.Type == waitForType(runMountTypeCache) {
 				edgeAttrs["arrowhead"] = "ediamond"
+				if labels {
+					edgeAttrs["label"] = "RUN (cache)"
+				}
 			}
 
 			graph.AddEdge(

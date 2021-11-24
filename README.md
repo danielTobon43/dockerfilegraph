@@ -18,9 +18,17 @@ The edges of the graph represent:
 - _COPY --from=..._ dependencies with an empty arrow head
 - _RUN --mount=type=cache,from=..._ dependencies with an empty diamond arrow head
 
+You can add optional edge labels to the graph and change the output format and resolution. For all the details, see the [options](#more-options) below.
+
 ## Example Output
 
+### Default
+
 ![Example graph](https://user-images.githubusercontent.com/547220/120117354-2037a800-c18d-11eb-8750-ce954c5529df.png)
+
+### With Edge Labels
+
+tbd
 
 ## Getting Started
 
@@ -59,7 +67,7 @@ go build
 ### More Options
 
 ```text
-$ dockerfilegraph --help
+❯ dockerfilegraph --help
 dockerfilegraph visualizes your multi-stage Dockerfile.
 It outputs a graph representation of the build process.
 
@@ -69,6 +77,7 @@ Usage:
 Flags:
   -d, --dpi int   Dots per inch of the PNG export (default 96)
   -h, --help      help for dockerfilegraph
+  -l, --labels    Display edge labels (default false)
   -o, --output    Output file format. One of: pdf, png (default pdf)
 ```
 
